@@ -21,11 +21,16 @@ int main(int argc, char **argv)
         printf("read %ld\n", rsize);
     }
 
-    if(filename == 0){
-        printf("No current filename\n");
-    } else {
-        long wsize = writeFile("test.txt", buffer);
-        printf("write %ld\n", wsize);
+    char command[64];
+    char status = 0;
+    while(status == 0){
+        fgets(command, 64, stdin);
+
+        if ((strlen(command) > 0) && (command[strlen(command) - 1] == '\n')){
+            command[strlen (command) - 1] = '\0';
+        }
+
+        status = parse(command, filename, buffer);
     }
 
     if (buffer) {

@@ -5,9 +5,14 @@
 
 long readFile(const char *filename, char **buffer)
 {
+    if(filename == 0){
+        printf("No current filename\n");
+        return -1;
+    }
+
     FILE *fp = fopen(filename, "r");
     if (fp == 0) {
-        printf("Cannot open input file");
+        printf("Cannot open input file\n");
         return -1;
     }
 
@@ -17,7 +22,7 @@ long readFile(const char *filename, char **buffer)
 
     *buffer = (char *)calloc(1, size + 1);
     if (*buffer == 0) {
-        perror("Memory allocation error");
+        perror("Memory allocation error\n");
         fclose(fp);
         return -1;
     }
@@ -30,10 +35,15 @@ long readFile(const char *filename, char **buffer)
 
 long writeFile(char *filename, char *buffer)
 {
+    if(filename == 0){
+        printf("No current filename\n");
+        return -1;
+    }
+
     FILE *fp = fopen(filename, "w");
 
     if(!fp){
-        printf("Cannot open output file");
+        printf("Cannot open output file\n");
         return -1;
     }
 
