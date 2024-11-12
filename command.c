@@ -30,6 +30,9 @@ char parse(char *s, char *filename, char **buffer)
                 printf("buffer empty\n");
             }
             break;
+        case 'a':
+            readConsole(buffer);
+            break;
         case 'q':
             return 1;
         default:

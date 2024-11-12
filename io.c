@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "ed.h"
 
@@ -54,4 +55,44 @@ long writeFile(char *filename, char *buffer)
     long size = ftell(fp);
     fclose(fp);
     return size;
+}
+
+short readConsole(char **buffer) {
+    char text[256];
+    int line = 1;
+    long totalSize = 0;
+
+    *buffer = (char *)calloc(1, 1);
+
+    if (*buffer == NULL) {
+        perror("Memory allocation error\n");
+        return -1;
+    }
+
+    while (1) {
+
+        printf("%i ", line);
+        fgets(text, sizeof(text), stdin);
+
+        if (text[0] == '.' && text[1] == '\n') {
+            break;
+        }
+
+        int textLength = strlen(text);
+
+        char *newBuffer = realloc(*buffer, totalSize + textLength + 1);
+        if (newBuffer == NULL) {
+            perror("Memory allocation error\n");
+            free(*buffer);
+            return -1;
+        }
+
+        *buffer = newBuffer;
+
+        strcpy(*buffer + totalSize, text);
+        totalSize += textLength;
+        line += 1;
+    }
+
+    return 0;
 }
