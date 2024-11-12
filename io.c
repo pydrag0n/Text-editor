@@ -21,7 +21,7 @@ long readFile(const char *filename, char **buffer)
     long size = ftell(fp);
     fseek(fp, 0, SEEK_SET);
 
-    *buffer = (char *)calloc(1, size + 1);
+    *buffer = realloc(*buffer, size + 1);
     if (*buffer == 0) {
         perror("Memory allocation error\n");
         fclose(fp);
@@ -42,8 +42,7 @@ long writeFile(char *filename, char *buffer)
     }
 
     FILE *fp = fopen(filename, "w");
-
-    if(!fp){
+    if(!fp) {
         printf("Cannot open output file\n");
         return -1;
     }
@@ -57,7 +56,8 @@ long writeFile(char *filename, char *buffer)
     return size;
 }
 
-short readConsole(char **buffer) {
+short readConsole(char **buffer)
+{
     char text[256];
     int line = 1;
     long totalSize = 0;
@@ -70,7 +70,6 @@ short readConsole(char **buffer) {
     }
 
     while (1) {
-
         printf("%i ", line);
         fgets(text, sizeof(text), stdin);
 
@@ -93,6 +92,5 @@ short readConsole(char **buffer) {
         totalSize += textLength;
         line += 1;
     }
-
     return 0;
 }

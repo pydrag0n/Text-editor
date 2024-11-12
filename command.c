@@ -31,7 +31,7 @@ char parse(char *s, char **filename, char **buffer)
             break;
         case 'p':
             if (*buffer) {
-                printf("buffer dump:\n%s\n", *buffer);
+                printf("%s", *buffer);
             } else {
                 printf("buffer empty\n");
             }
