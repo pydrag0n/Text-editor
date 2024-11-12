@@ -33,11 +33,6 @@ int main(int argc, char **argv)
         status = parse(command, filename, buffer);
     }
 
-    if (buffer) {
-        printf("buffer dump:\n%s\n", buffer);
-    } else {
-        printf("buffer empty\n");
-    }
     free(buffer);
     return 0;
 }

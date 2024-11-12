@@ -15,6 +15,13 @@ char parse(char *s, char *filename, char *buffer)
             }
             printf("write %ld\n", size);
             break;
+        case 'p':
+            if (buffer) {
+                printf("buffer dump:\n%s\n", buffer);
+            } else {
+                printf("buffer empty\n");
+            }
+            break;
         case 'q':
             return 1;
         default:
