@@ -15,7 +15,7 @@ long readFile(const char *filename, char **buffer)
     long size = ftell(fp);
     fseek(fp, 0, SEEK_SET);
 
-    *buffer = (char *)malloc(size + 1);
+    *buffer = (char *)calloc(1, size + 1);
     if (*buffer == 0) {
         perror("Memory allocation error");
         fclose(fp);
@@ -23,7 +23,6 @@ long readFile(const char *filename, char **buffer)
     }
 
     fread(*buffer, 1, size, fp);
-    (*buffer)[size] = '\0';
 
     fclose(fp);
     return size;
