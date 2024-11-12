@@ -17,8 +17,10 @@ int main(int argc, char **argv)
     if(argc == 2) {
         filename = malloc(strlen(argv[1]) + 1);
         strcpy(filename, argv[1]);
-        long rsize = readFile(filename, &buffer);
-        printf("read %ld\n", rsize);
+        long size = readFile(filename, &buffer);
+        if(size != -1) {
+            printf("read %ld\n", size);
+        }
     }
 
     char command[64];
@@ -27,7 +29,7 @@ int main(int argc, char **argv)
         printf("*");
         fgets(command, 64, stdin);
 
-        if ((strlen(command) > 0) && (command[strlen(command) - 1] == '\n')){
+        if ((strlen(command) > 0) && (command[strlen(command) - 1] == '\n')) {
             command[strlen (command) - 1] = '\0';
         }
 

@@ -15,7 +15,9 @@ char parse(char *s, char **filename, char **buffer)
             } else {
                 size = writeFile(&s[2], *buffer);
             }
-            printf("write %ld\n", size);
+            if(size != -1) {
+                printf("write %ld\n", size);
+            }
             break;
         case 'e':
             if(s[2] == 0) {
@@ -27,10 +29,12 @@ char parse(char *s, char **filename, char **buffer)
                 }
                 strcpy(*filename, &s[2]);
             }
-            printf("read %ld\n", size);
+            if(size != -1) {
+                printf("read %ld\n", size);
+            }
             break;
         case 'p':
-            if (*buffer) {
+            if (*buffer != 0) {
                 printf("%s", *buffer);
             } else {
                 printf("buffer empty\n");

@@ -1,14 +1,18 @@
 CC=gcc
 CFLAGS=-Wall
 
-OBJS = command.o io.o main.o
+O=out
+OBJS = $(O)/command.o $(O)/io.o $(O)/main.o
 
-.PHONY: all
-all: ed.exe
-	ed.exe
+.PHONY: all clean
+all: out $(O)/ed.exe
+	$(O)/ed.exe
 
-ed.exe: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o ed.exe
+out:
+	mkdir out
 
-%.o: %.c
+$(O)/ed.exe: $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(O)/ed.exe
+
+$(O)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

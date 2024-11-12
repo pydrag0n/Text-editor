@@ -64,7 +64,7 @@ short readConsole(char **buffer)
 
     *buffer = (char *)calloc(1, 1);
 
-    if (*buffer == NULL) {
+    if (*buffer == 0) {
         perror("Memory allocation error\n");
         return -1;
     }
