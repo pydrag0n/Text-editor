@@ -1,3 +1,4 @@
-:: запускается только под cmd
-gcc main.c -o ed.exe
+gcc io.c -c -o io.o
+gcc main.c -c -o main.o
+gcc io.o main.o -o ed.exe
 ed.exe
