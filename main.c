@@ -30,7 +30,7 @@ int main(int argc, char **argv)
             command[strlen (command) - 1] = '\0';
         }
 
-        status = parse(command, filename, buffer, &buffer);
+        status = parse(command, filename, &buffer);
     }
 
     free(buffer);
