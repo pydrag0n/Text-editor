@@ -5,7 +5,7 @@
 
 long readFile(const char *filename, char **buffer)
 {
-    if(filename == 0){
+    if(filename == 0) {
         printf("No current filename\n");
         return -1;
     }
@@ -35,7 +35,7 @@ long readFile(const char *filename, char **buffer)
 
 long writeFile(char *filename, char *buffer)
 {
-    if(filename == 0){
+    if(filename == 0) {
         printf("No current filename\n");
         return -1;
     }

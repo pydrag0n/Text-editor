@@ -2,18 +2,26 @@
 
 #include "ed.h"
 
-char parse(char *s, char *filename, char *buffer)
+char parse(char *s, char *filename, char *buffer, char **adbuffer)
 {
     char c = s[0];
-    switch(c){
+    long size;
+    switch(c) {
         case 'w':
-            long size;
-            if(s[2] == 0){
+            if(s[2] == 0) {
                 size = writeFile(filename, buffer);
             } else {
                 size = writeFile(&s[2], buffer);
             }
             printf("write %ld\n", size);
+            break;
+        case 'e':
+            if(s[2] == 0) {
+                size = readFile(filename, adbuffer);
+            } else {
+                size = readFile(&s[2], adbuffer);
+            }
+            printf("read %ld\n", size);
             break;
         case 'p':
             if (buffer) {
