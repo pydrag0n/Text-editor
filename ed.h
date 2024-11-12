@@ -4,4 +4,4 @@ long writeFile(char *filename, char *buffer);
 short readConsole(char **buffer);
 
 // command.c
-char parse(char *s, char *filename, char **buffer);
+char parse(char *s, char **filename, char **buffer);
