@@ -68,13 +68,14 @@ long readConsole(char _Mode) // a or i
 {
     char *buffer = getBuffer();
     char *bufferTop = getBufferTop();
+    char text[256] = "";
     if(buffer == 0) {_Mode = 'i';}
 
-    char text[256] = "";
     static int line = 1;
     if(_Mode == 'i') {
         line = 1;
     }
+
     long totalSize = 0;
     if(_Mode == 'a') {
         totalSize = bufferTop - buffer;
@@ -101,18 +102,16 @@ long readConsole(char _Mode) // a or i
         }
 
         buffer = newBuffer;
-        setBuffer(newBuffer);
+        setBuffer(buffer);
 
-        if(_Mode == 'i'){
-            strcpy(buffer + totalSize, text);
-        } else {
-            strcpy(bufferTop, text);
-        }
+        bufferTop = buffer + totalSize;
 
-        bufferTop = newBuffer + totalSize + textLength;
-        setBufferTop(newBuffer + totalSize + textLength);
+        strcpy(bufferTop, text);
 
         totalSize += textLength;
+        bufferTop += textLength;
+        setBufferTop(bufferTop);
+
         line += 1;
     }
     return totalSize;
