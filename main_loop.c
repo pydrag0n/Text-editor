@@ -13,24 +13,15 @@ void setFilename(char *const s)
     strncpy(filename, s, sizeof(filename));
     filename[sizeof(filename) - 1] = 0;
 }
-char* getFilename(void){ return filename; }
+char* getFilename(void) { return filename; }
 
-void setBuffer(char *const s)
-{
-    buffer = s;
-}
-char* getBuffer(void){ return buffer; }
+void setBuffer(char *const s) { buffer = s; }
+char* getBuffer(void) { return buffer; }
 
-void setBufferTop(char *const s)
-{
-    bufferTop = s;
-}
-char* getBufferTop(void){ return bufferTop; }
+void setBufferTop(char *const s) { bufferTop = s; }
+char* getBufferTop(void) { return bufferTop; }
 
-void switchColor(void)
-{
-    color = !color;
-}
+void switchColor(void) { color = !color; }
 
 void cprint(char t)
 {

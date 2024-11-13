@@ -71,25 +71,23 @@ long readConsole(char _Mode) // a or i
     char text[256] = "";
     if(buffer == 0) {_Mode = 'i';}
 
-    static int line = 1;
+    static long line = 1;
+    long totalSize = 0;
     if(_Mode == 'i') {
         line = 1;
-    }
-
-    long totalSize = 0;
-    if(_Mode == 'a') {
+    } else {
         totalSize = bufferTop - buffer;
     }
 
     while (1) {
-        printf("%i ", line);
+        printf("%ld ", line);
         fgets(text, sizeof(text), stdin);
 
         if (text[0] == COMMAND_QUIT_INSERT && text[1] == '\n') {
             break;
         }
 
-        int textLength = strlen(text);
+        long textLength = strlen(text);
 
         if(buffer == 0) {
             buffer = calloc(1, sizeof(text));
@@ -105,7 +103,6 @@ long readConsole(char _Mode) // a or i
         setBuffer(buffer);
 
         bufferTop = buffer + totalSize;
-
         strcpy(bufferTop, text);
 
         totalSize += textLength;
@@ -120,11 +117,11 @@ long readConsole(char _Mode) // a or i
 void printBuffer(void)
 {
     char *buffer = getBuffer();
-    int line = 1;
+    long line = 1;
     char *p = 0;
     while(*buffer != '\0') {
         p = strchr(buffer, '\n') + 1;
-        printf("%i ", line);
+        printf("%ld ", line);
         printf("%.*s", (int)(p - buffer), buffer);
         buffer = p;
         line++;

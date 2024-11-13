@@ -46,8 +46,8 @@ char* getBuffer(void);
 void setBufferTop(char *const s);
 char* getBufferTop(void);
 
-void loop(void);
-
 void switchColor(void);
 
 void cprint(char t);
+
+void loop(void);
