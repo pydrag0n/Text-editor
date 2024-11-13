@@ -7,13 +7,13 @@
 long readFile(const char *filename, char **buffer)
 {
     if(filename == 0) {
-        printf("No current filename\n");
+        printf(FNF_ERROR_TYPE);
         return ST_ERROR;
     }
 
     FILE *fp = fopen(filename, "r");
     if (fp == 0) {
-        printf("Cannot open input file\n");
+        printf(OPEN_FILE_ERROR_TYPE);
         return ST_ERROR;
     }
 
@@ -23,7 +23,7 @@ long readFile(const char *filename, char **buffer)
 
     *buffer = realloc(*buffer, size + 1);
     if (*buffer == 0) {
-        perror("Memory allocation error\n");
+        perror(MEM_ERROR_TYPE);
         fclose(fp);
         return ST_ERROR;
     }
@@ -37,13 +37,13 @@ long readFile(const char *filename, char **buffer)
 long writeFile(char *filename, char *buffer)
 {
     if(filename == 0) {
-        printf("No current filename\n");
+        printf(FNF_ERROR_TYPE);
         return ST_ERROR;
     }
 
     FILE *fp = fopen(filename, "w");
     if(!fp) {
-        printf("Cannot open output file\n");
+        printf(OPEN_FILE_ERROR_TYPE);
         return ST_ERROR;
     }
 
@@ -65,7 +65,7 @@ short readConsole(char **buffer)
     *buffer = (char *)calloc(1, 1);
 
     if (*buffer == 0) {
-        perror("Memory allocation error\n");
+        perror(MEM_ERROR_TYPE);
         return ST_ERROR;
     }
 
@@ -73,7 +73,7 @@ short readConsole(char **buffer)
         printf("%i ", line);
         fgets(text, sizeof(text), stdin);
 
-        if (text[0] == '.' && text[1] == '\n') {
+        if (text[0] == QUIT_INSERT_MODE_COMMAND && text[1] == '\n') {
             break;
         }
 
@@ -81,7 +81,7 @@ short readConsole(char **buffer)
 
         char *newBuffer = realloc(*buffer, totalSize + textLength + 1);
         if (newBuffer == NULL) {
-            perror("Memory allocation error\n");
+            perror(MEM_ERROR_TYPE);
             free(*buffer);
             return ST_ERROR;
         }

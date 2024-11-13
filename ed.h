@@ -1,12 +1,29 @@
+// [main states]
 #define ST_ERROR       -1
 #define ST_RUN_LOOP     0
 #define ST_STOP_LOOP    1
 
+// ================== [error types] ==================
+#define MEM_ERROR_TYPE          "Memory allocation error\n"
+#define FNF_ERROR_TYPE          "No current filename\n"     // file not found error type
+#define OPEN_FILE_ERROR_TYPE    "Cannot open output file\n"
 
-// io.c
+// ================== [other] ==================
+#define DEFAULT_COMMAND_CHAR        "*"     // symbol in command reading mode
+
+// ================== [commands type] ==================
+#define QUIT_COMMAND                'q'
+#define QUIT_INSERT_MODE_COMMAND    '.'
+#define WRITE_FILE_COMMAND          'w'
+#define READ_FILE_COMMAND           'e'
+#define READ_BUFFER_COMMAND         'p'
+#define ENTER_INSERT_MODE           'a'
+
+
+// ================== [io.c] ==================
 long readFile(const char *filename, char **buffer);
 long writeFile(char *filename, char *buffer);
 short readConsole(char **buffer);
 
-// command.c
+// ================== [command.c] ==================
 char parse(char *s, char **filename, char **buffer);

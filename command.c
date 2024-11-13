@@ -9,17 +9,17 @@ char parse(char *s, char **filename, char **buffer)
     char c = s[0];
     long size;
     switch(c) {
-        case 'w':
+        case WRITE_FILE_COMMAND:
             if(s[2] == 0) {
                 size = writeFile(*filename, *buffer);
             } else {
                 size = writeFile(&s[2], *buffer);
             }
             if(size != -1) {
-                printf("write %ld\n", size);
+                printf("write %ld (bytes)\n", size);
             }
             break;
-        case 'e':
+        case READ_FILE_COMMAND:
             if(s[2] == 0) {
                 size = readFile(*filename, buffer);
             } else {
@@ -33,17 +33,17 @@ char parse(char *s, char **filename, char **buffer)
                 printf("read %ld\n", size);
             }
             break;
-        case 'p':
+        case READ_BUFFER_COMMAND:
             if (*buffer != 0) {
                 printf("%s", *buffer);
             } else {
                 printf("buffer empty\n");
             }
             break;
-        case 'a':
+        case ENTER_INSERT_MODE:
             readConsole(buffer);
             break;
-        case 'q':
+        case QUIT_COMMAND:
             return ST_STOP_LOOP;
         default:
             printf("?\n");

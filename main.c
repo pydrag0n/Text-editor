@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     char command[64];
     char status = ST_RUN_LOOP;
     while(status == ST_RUN_LOOP) {
-        printf("*");
+        printf(DEFAULT_COMMAND_CHAR);
         fgets(command, 64, stdin);
 
         if ((strlen(command) > 0) && (command[strlen(command) - 1] == '\n')) {
