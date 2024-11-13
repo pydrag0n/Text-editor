@@ -44,9 +44,9 @@ char parse(char *s, char **filename, char **buffer)
             readConsole(buffer);
             break;
         case 'q':
-            return 1;
+            return ST_STOP_LOOP;
         default:
             printf("?\n");
     }
-    return 0;
+    return ST_RUN_LOOP;
 }

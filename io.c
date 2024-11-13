@@ -8,13 +8,13 @@ long readFile(const char *filename, char **buffer)
 {
     if(filename == 0) {
         printf("No current filename\n");
-        return -1;
+        return ST_ERROR;
     }
 
     FILE *fp = fopen(filename, "r");
     if (fp == 0) {
         printf("Cannot open input file\n");
-        return -1;
+        return ST_ERROR;
     }
 
     fseek(fp, 0, SEEK_END);
@@ -25,7 +25,7 @@ long readFile(const char *filename, char **buffer)
     if (*buffer == 0) {
         perror("Memory allocation error\n");
         fclose(fp);
-        return -1;
+        return ST_ERROR;
     }
 
     fread(*buffer, 1, size, fp);
@@ -38,13 +38,13 @@ long writeFile(char *filename, char *buffer)
 {
     if(filename == 0) {
         printf("No current filename\n");
-        return -1;
+        return ST_ERROR;
     }
 
     FILE *fp = fopen(filename, "w");
     if(!fp) {
         printf("Cannot open output file\n");
-        return -1;
+        return ST_ERROR;
     }
 
     fputs(buffer, fp);
@@ -66,7 +66,7 @@ short readConsole(char **buffer)
 
     if (*buffer == 0) {
         perror("Memory allocation error\n");
-        return -1;
+        return ST_ERROR;
     }
 
     while (1) {
@@ -83,7 +83,7 @@ short readConsole(char **buffer)
         if (newBuffer == NULL) {
             perror("Memory allocation error\n");
             free(*buffer);
-            return -1;
+            return ST_ERROR;
         }
 
         *buffer = newBuffer;

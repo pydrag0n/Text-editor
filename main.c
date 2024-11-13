@@ -24,8 +24,8 @@ int main(int argc, char **argv)
     }
 
     char command[64];
-    char status = 0;
-    while(status == 0) {
+    char status = ST_RUN_LOOP;
+    while(status == ST_RUN_LOOP) {
         printf("*");
         fgets(command, 64, stdin);
 
