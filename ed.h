@@ -34,6 +34,7 @@ char parse(char *s);
 long readFile(void);
 long writeFile(void);
 long readConsole(char const _Mode);
+void printBuffer(void);
 
 // ========== [main_loop.c] ==========
 void setFilename(char *const s);

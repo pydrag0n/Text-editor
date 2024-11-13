@@ -34,7 +34,7 @@ char parse(char *s)
             break;
         case COMMAND_PRINT_BUFFER:
             if(buffer != 0) {
-                printf("%s", buffer);
+                printBuffer();
             } else {
                 printf("buffer empty\n");
             }

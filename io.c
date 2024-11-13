@@ -112,7 +112,21 @@ long readConsole(char _Mode) // a or i
         bufferTop += textLength;
         setBufferTop(bufferTop);
 
-        line += 1;
+        line++;
     }
     return totalSize;
+}
+
+void printBuffer(void)
+{
+    char *buffer = getBuffer();
+    int line = 1;
+    char *p = 0;
+    while(*buffer != '\0') {
+        p = strchr(buffer, '\n') + 1;
+        printf("%i ", line);
+        printf("%.*s", (int)(p - buffer), buffer);
+        buffer = p;
+        line++;
+    }
 }
