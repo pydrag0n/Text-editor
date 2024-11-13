@@ -67,18 +67,15 @@ long writeFile(void)
 long readConsole(char _Mode) // a or i
 {
     char *buffer = getBuffer();
-    char text[256];
+    char *bufferTop = getBufferTop();
+    if(buffer == 0) {_Mode = 'i';}
+
+    char text[256] = "";
     int line = 1;
-    long totalSize = 0;
+    long totalSize = bufferTop - buffer;
 
     while (1) {
-        if (DEF_COLOR_MODE!=0) {
-            printf("%s%i%s ",TEXT_COLOR_BLUE ,line, COLOR_END);
-        }
-        else {
-            printf("%i ", line);
-
-        }
+        printf("%i ", line);
         fgets(text, sizeof(text), stdin);
 
         if (text[0] == QUIT_INSERT_MODE_COMMAND && text[1] == '\n') {
@@ -87,6 +84,9 @@ long readConsole(char _Mode) // a or i
 
         int textLength = strlen(text);
 
+        if(buffer == 0) {
+            buffer = calloc(1, sizeof(text));
+        }
         char *newBuffer = realloc(buffer, totalSize + textLength + 1);
         if (newBuffer == 0) {
             cprint(ERROR_CODE_MEM);
@@ -94,17 +94,18 @@ long readConsole(char _Mode) // a or i
             return ST_ERROR;
         }
 
-        if(buffer == 0) {_Mode = 'i';}
         buffer = newBuffer;
         setBuffer(newBuffer);
-        if (_Mode == 'a') {
-            strcat(buffer + totalSize, text); // append to buffer
-        } else if (_Mode == 'i') {
-            strcpy(buffer + totalSize, text); // rewrite buffer
+
+        if(_Mode == 'i'){
+            strcpy(buffer + totalSize, text);
         } else {
-            printf("Mode incorrect");
-            return ST_ERROR;
+            strcpy(bufferTop, text);
         }
+
+        bufferTop = newBuffer + totalSize + textLength;
+        setBufferTop(newBuffer + totalSize + textLength);
+
         totalSize += textLength;
         line += 1;
     }

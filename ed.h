@@ -36,11 +36,14 @@ long readConsole(char const _Mode);
 char parse(char *s);
 
 // ========== [main_loop.c] ==========
-void setFilename(const char *const s);
+void setFilename(char *const s);
 char* getFilename(void);
 
 void setBuffer(char *const s);
 char* getBuffer(void);
+
+void setBufferTop(char *const s);
+char* getBufferTop(void);
 
 void loop(void);
 

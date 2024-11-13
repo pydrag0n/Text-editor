@@ -5,9 +5,10 @@
 
 static char filename[255] = "";
 static char *buffer = 0;
+static char *bufferTop = 0;
 static char color = 0;
 
-void setFilename(const char *const s)
+void setFilename(char *const s)
 {
     strncpy(filename, s, sizeof(filename));
     filename[sizeof(filename) - 1] = 0;
@@ -19,6 +20,12 @@ void setBuffer(char *const s)
     buffer = s;
 }
 char* getBuffer(void){ return buffer; }
+
+void setBufferTop(char *const s)
+{
+    bufferTop = s;
+}
+char* getBufferTop(void){ return bufferTop; }
 
 void switchColor(void)
 {

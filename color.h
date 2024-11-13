@@ -1,6 +1,3 @@
-#define DEF_COLOR_MODE 0
-#define COLOR_MODE 1
-
 #define COLOR_END                   "\x1b[0m"
 
 #define TEXT_COLOR_RED              "\x1b[31m"
