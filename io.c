@@ -10,13 +10,13 @@ long readFile(void)
     char *buffer = getBuffer();
 
     if(filename == 0) {
-        printf(FNF_ERROR_TYPE);
+        cprint(ERROR_CODE_FILENAME);
         return ST_ERROR;
     }
 
     FILE *fp = fopen(filename, "r");
     if (fp == 0) {
-        printf(OPEN_FILE_ERROR_TYPE);
+        cprint(ERROR_CODE_OPEN);
         return ST_ERROR;
     }
 
@@ -27,7 +27,7 @@ long readFile(void)
     free(buffer);
     buffer = calloc(1, size + 1);
     if (buffer == 0) {
-        printf(MEM_ERROR_TYPE);
+        cprint(ERROR_CODE_MEM);
         fclose(fp);
         return ST_ERROR;
     }
@@ -45,13 +45,13 @@ long writeFile(void)
     const char *buffer = getBuffer();
 
     if(filename == 0) {
-        printf(FNF_ERROR_TYPE);
+        cprint(ERROR_CODE_FILENAME);
         return ST_ERROR;
     }
 
     FILE *fp = fopen(filename, "w");
     if(fp == 0) {
-        printf(OPEN_FILE_ERROR_TYPE);
+        cprint(ERROR_CODE_OPEN);
         return ST_ERROR;
     }
 
@@ -64,7 +64,7 @@ long writeFile(void)
     return size;
 }
 
-long readConsole(char const _Mode) // a or i
+long readConsole(char _Mode) // a or i
 {
     char *buffer = getBuffer();
     char text[256];
@@ -89,20 +89,19 @@ long readConsole(char const _Mode) // a or i
 
         char *newBuffer = realloc(buffer, totalSize + textLength + 1);
         if (newBuffer == 0) {
-            printf(MEM_ERROR_TYPE);
+            cprint(ERROR_CODE_MEM);
             free(buffer);
             return ST_ERROR;
         }
 
+        if(buffer == 0) {_Mode = 'i';}
         buffer = newBuffer;
         setBuffer(newBuffer);
         if (_Mode == 'a') {
-             strcat(buffer+totalSize, text); // не стирает
-        }
-        else if (_Mode == 'i') { 
-            strcpy(buffer + totalSize, text); // стирает
-        }
-        else {
+            strcat(buffer + totalSize, text); // append to buffer
+        } else if (_Mode == 'i') {
+            strcpy(buffer + totalSize, text); // rewrite buffer
+        } else {
             printf("Mode incorrect");
             return ST_ERROR;
         }

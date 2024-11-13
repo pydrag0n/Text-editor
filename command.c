@@ -39,17 +39,20 @@ char parse(char *s)
                 printf("buffer empty\n");
             }
             break;
+        case ENTER_APPEND_MODE:
+            size = readConsole(ENTER_APPEND_MODE);
+            if(size != ST_ERROR) {
+                printf("saved to buffer %ld\n", size);
+            }
+            break;
         case ENTER_INSERT_MODE:
             size = readConsole(ENTER_INSERT_MODE);
             if(size != ST_ERROR) {
                 printf("saved to buffer %ld\n", size);
             }
             break;
-        case ENTER_I_INSERT_MODE:
-            size = readConsole(ENTER_I_INSERT_MODE);
-            if(size != ST_ERROR) {
-                printf("saved to buffer %ld\n", size);
-            }
+        case SWITCH_COLOR:
+            switchColor();
             break;
         case QUIT_COMMAND:
             return ST_STOP_LOOP;
