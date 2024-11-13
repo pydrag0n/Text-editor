@@ -4,8 +4,11 @@
 
 #include "ed.h"
 
-long readFile(const char *filename, char **buffer)
+long readFile(void)
 {
+    const char *filename = getFilename();
+    char *buffer = getBuffer();
+
     if(filename == 0) {
         printf(FNF_ERROR_TYPE);
         return ST_ERROR;
@@ -21,28 +24,33 @@ long readFile(const char *filename, char **buffer)
     long size = ftell(fp);
     fseek(fp, 0, SEEK_SET);
 
-    *buffer = realloc(*buffer, size + 1);
-    if (*buffer == 0) {
+    free(buffer);
+    buffer = calloc(1, size + 1);
+    if (buffer == 0) {
         printf(MEM_ERROR_TYPE);
         fclose(fp);
         return ST_ERROR;
     }
+    setBuffer(buffer);
 
-    fread(*buffer, 1, size, fp);
+    fread(buffer, 1, size, fp);
 
     fclose(fp);
     return size;
 }
 
-long writeFile(char *filename, char *buffer)
+long writeFile(void)
 {
+    const char *filename = getFilename();
+    const char *buffer = getBuffer();
+
     if(filename == 0) {
         printf(FNF_ERROR_TYPE);
         return ST_ERROR;
     }
 
     FILE *fp = fopen(filename, "w");
-    if(!fp) {
+    if(fp == 0) {
         printf(OPEN_FILE_ERROR_TYPE);
         return ST_ERROR;
     }
@@ -56,18 +64,12 @@ long writeFile(char *filename, char *buffer)
     return size;
 }
 
-short readConsole(char **buffer)
+long readConsole(void)
 {
+    char *buffer = getBuffer();
     char text[256];
     int line = 1;
     long totalSize = 0;
-
-    *buffer = (char *)calloc(1, 1);
-
-    if (*buffer == 0) {
-        printf(MEM_ERROR_TYPE);
-        return ST_ERROR;
-    }
 
     while (1) {
         if (DEF_COLOR_MODE!=0) {
@@ -85,18 +87,19 @@ short readConsole(char **buffer)
 
         int textLength = strlen(text);
 
-        char *newBuffer = realloc(*buffer, totalSize + textLength + 1);
-        if (newBuffer == NULL) {
+        char *newBuffer = realloc(buffer, totalSize + textLength + 1);
+        if (newBuffer == 0) {
             printf(MEM_ERROR_TYPE);
-            free(*buffer);
+            free(buffer);
             return ST_ERROR;
         }
 
-        *buffer = newBuffer;
+        buffer = newBuffer;
+        setBuffer(newBuffer);
 
-        strcpy(*buffer + totalSize, text);
+        strcpy(buffer + totalSize, text);
         totalSize += textLength;
         line += 1;
     }
-    return 0;
+    return totalSize;
 }

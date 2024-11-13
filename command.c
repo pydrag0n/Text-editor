@@ -4,44 +4,46 @@
 
 #include "ed.h"
 
-char parse(char *s, char **filename, char **buffer)
+char parse(char *s)
 {
+    char *buffer = getBuffer();
     char c = s[0];
     long size;
     switch(c) {
         case WRITE_FILE_COMMAND:
             if(s[2] == 0) {
-                size = writeFile(*filename, *buffer);
+                size = writeFile();
             } else {
-                size = writeFile(&s[2], *buffer);
+                setFilename(&s[2]);
+                size = writeFile();
             }
-            if(size != -1) {
-                printf("write %ld (bytes)\n", size);
+            if(size != ST_ERROR) {
+                printf("write %ld\n", size);
             }
             break;
         case READ_FILE_COMMAND:
             if(s[2] == 0) {
-                size = readFile(*filename, buffer);
+                size = readFile();
             } else {
-                size = readFile(&s[2], buffer);
-                if(*filename == 0){
-                    *filename = calloc(1, strlen(&s[2]) + 1);
-                }
-                strcpy(*filename, &s[2]);
+                setFilename(&s[2]);
+                size = readFile();
             }
-            if(size != -1) {
+            if(size != ST_ERROR) {
                 printf("read %ld\n", size);
             }
             break;
-        case READ_BUFFER_COMMAND:
-            if (*buffer != 0) {
-                printf("%s", *buffer);
+        case PRINT_BUFFER_COMMAND:
+            if(buffer != 0) {
+                printf("%s", buffer);
             } else {
                 printf("buffer empty\n");
             }
             break;
         case ENTER_INSERT_MODE:
-            readConsole(buffer);
+            size = readConsole();
+            if(size != ST_ERROR) {
+                printf("saved to buffer %ld\n", size);
+            }
             break;
         case QUIT_COMMAND:
             return ST_STOP_LOOP;

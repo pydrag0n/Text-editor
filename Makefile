@@ -1,8 +1,8 @@
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -g
 
 O=out
-OBJS = $(O)/command.o $(O)/io.o $(O)/main.o #$(O)/color.o
+OBJS = $(O)/command.o $(O)/io.o $(O)/main_loop.o $(O)/main.o
 
 .PHONY: all clean
 all: out $(O)/ed.exe
