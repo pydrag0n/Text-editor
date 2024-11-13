@@ -71,7 +71,10 @@ long readConsole(char _Mode) // a or i
     if(buffer == 0) {_Mode = 'i';}
 
     char text[256] = "";
-    int line = 1;
+    static int line = 1;
+    if(_Mode == 'i') {
+        line = 1;
+    }
     long totalSize = 0;
     if(_Mode == 'a') {
         totalSize = bufferTop - buffer;
