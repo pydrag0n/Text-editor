@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall
 
 O=out
-OBJS = $(O)/command.o $(O)/io.o $(O)/main.o
+OBJS = $(O)/command.o $(O)/io.o $(O)/main.o #$(O)/color.o
 
 .PHONY: all clean
 all: out $(O)/ed.exe

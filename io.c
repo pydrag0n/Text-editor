@@ -23,7 +23,7 @@ long readFile(const char *filename, char **buffer)
 
     *buffer = realloc(*buffer, size + 1);
     if (*buffer == 0) {
-        perror(MEM_ERROR_TYPE);
+        printf(MEM_ERROR_TYPE);
         fclose(fp);
         return ST_ERROR;
     }
@@ -65,12 +65,18 @@ short readConsole(char **buffer)
     *buffer = (char *)calloc(1, 1);
 
     if (*buffer == 0) {
-        perror(MEM_ERROR_TYPE);
+        printf(MEM_ERROR_TYPE);
         return ST_ERROR;
     }
 
     while (1) {
-        printf("%i ", line);
+        if (DEF_COLOR_MODE!=0) {
+            printf("%s%i%s ",TEXT_COLOR_BLUE ,line, COLOR_END);
+        }
+        else {
+            printf("%i ", line);
+
+        }
         fgets(text, sizeof(text), stdin);
 
         if (text[0] == QUIT_INSERT_MODE_COMMAND && text[1] == '\n') {
@@ -81,7 +87,7 @@ short readConsole(char **buffer)
 
         char *newBuffer = realloc(*buffer, totalSize + textLength + 1);
         if (newBuffer == NULL) {
-            perror(MEM_ERROR_TYPE);
+            printf(MEM_ERROR_TYPE);
             free(*buffer);
             return ST_ERROR;
         }
