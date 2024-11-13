@@ -10,7 +10,7 @@ char parse(char *s)
     char c = s[0];
     long size;
     switch(c) {
-        case WRITE_FILE_COMMAND:
+        case COMMAND_WRITE_FILE:
             if(s[2] == 0) {
                 size = writeFile();
             } else {
@@ -21,7 +21,7 @@ char parse(char *s)
                 printf("write %ld\n", size);
             }
             break;
-        case READ_FILE_COMMAND:
+        case COMMAND_READ_FILE:
             if(s[2] == 0) {
                 size = readFile();
             } else {
@@ -32,29 +32,29 @@ char parse(char *s)
                 printf("read %ld\n", size);
             }
             break;
-        case PRINT_BUFFER_COMMAND:
+        case COMMAND_PRINT_BUFFER:
             if(buffer != 0) {
                 printf("%s", buffer);
             } else {
                 printf("buffer empty\n");
             }
             break;
-        case ENTER_APPEND_MODE:
-            size = readConsole(ENTER_APPEND_MODE);
+        case COMMAND_APPEND:
+            size = readConsole(COMMAND_APPEND);
             if(size != ST_ERROR) {
                 printf("saved to buffer %ld\n", size);
             }
             break;
-        case ENTER_INSERT_MODE:
-            size = readConsole(ENTER_INSERT_MODE);
+        case COMMAND_INSERT:
+            size = readConsole(COMMAND_INSERT);
             if(size != ST_ERROR) {
                 printf("saved to buffer %ld\n", size);
             }
             break;
-        case SWITCH_COLOR:
+        case COMMAND_COLOR:
             switchColor();
             break;
-        case QUIT_COMMAND:
+        case COMMAND_QUIT:
             return ST_STOP_LOOP;
         default:
             printf("?\n");

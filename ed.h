@@ -18,22 +18,22 @@
 #define ST_STOP_LOOP    1
 
 // ========== [commands] ==========
-#define QUIT_COMMAND                'q'
-#define QUIT_INSERT_MODE_COMMAND    '.'
-#define WRITE_FILE_COMMAND          'w'
-#define READ_FILE_COMMAND           'e'
-#define PRINT_BUFFER_COMMAND        'p'
-#define ENTER_APPEND_MODE           'a'
-#define ENTER_INSERT_MODE           'i'
-#define SWITCH_COLOR                'C'
+#define COMMAND_QUIT                'q'
+#define COMMAND_QUIT_INSERT         '.'
+#define COMMAND_WRITE_FILE          'w'
+#define COMMAND_READ_FILE           'e'
+#define COMMAND_PRINT_BUFFER        'p'
+#define COMMAND_APPEND              'a'
+#define COMMAND_INSERT              'i'
+#define COMMAND_COLOR               'C'
+
+// ========== [command.c] ==========
+char parse(char *s);
 
 // ========== [io.c] ==========
 long readFile(void);
 long writeFile(void);
 long readConsole(char const _Mode);
-
-// ========== [command.c] ==========
-char parse(char *s);
 
 // ========== [main_loop.c] ==========
 void setFilename(char *const s);

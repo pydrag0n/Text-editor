@@ -72,13 +72,16 @@ long readConsole(char _Mode) // a or i
 
     char text[256] = "";
     int line = 1;
-    long totalSize = bufferTop - buffer;
+    long totalSize = 0;
+    if(_Mode == 'a') {
+        totalSize = bufferTop - buffer;
+    }
 
     while (1) {
         printf("%i ", line);
         fgets(text, sizeof(text), stdin);
 
-        if (text[0] == QUIT_INSERT_MODE_COMMAND && text[1] == '\n') {
+        if (text[0] == COMMAND_QUIT_INSERT && text[1] == '\n') {
             break;
         }
 
