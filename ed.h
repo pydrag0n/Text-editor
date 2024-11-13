@@ -18,18 +18,19 @@
 
 
 // ================== [commands type] ==================
-#define QUIT_COMMAND                'q'
-#define QUIT_INSERT_MODE_COMMAND    '.'
-#define WRITE_FILE_COMMAND          'w'
-#define READ_FILE_COMMAND           'e'
-#define PRINT_BUFFER_COMMAND        'p'
-#define ENTER_INSERT_MODE           'a'
+#define QUIT_COMMAND                    'q'
+#define QUIT_INSERT_MODE_COMMAND        '.'
+#define WRITE_FILE_COMMAND              'w'
+#define READ_FILE_COMMAND               'e'
+#define PRINT_BUFFER_COMMAND            'p'
+#define ENTER_INSERT_MODE               'a'
+#define ENTER_I_INSERT_MODE             'i'
 
 
 // ========== [io.c] ==========
 long readFile(void);
 long writeFile(void);
-long readConsole(void);
+long readConsole(char const _Mode);
 
 // ========== [command.c] ==========
 char parse(char *s);

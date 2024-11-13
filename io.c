@@ -64,7 +64,7 @@ long writeFile(void)
     return size;
 }
 
-long readConsole(void)
+long readConsole(char const _Mode) // a or i
 {
     char *buffer = getBuffer();
     char text[256];
@@ -96,8 +96,16 @@ long readConsole(void)
 
         buffer = newBuffer;
         setBuffer(newBuffer);
-
-        strcpy(buffer + totalSize, text);
+        if (_Mode == 'a') {
+             strcat(buffer+totalSize, text); // не стирает
+        }
+        else if (_Mode == 'i') { 
+            strcpy(buffer + totalSize, text); // стирает
+        }
+        else {
+            printf("Mode incorrect");
+            return ST_ERROR;
+        }
         totalSize += textLength;
         line += 1;
     }

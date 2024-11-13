@@ -40,7 +40,13 @@ char parse(char *s)
             }
             break;
         case ENTER_INSERT_MODE:
-            size = readConsole();
+            size = readConsole(ENTER_INSERT_MODE);
+            if(size != ST_ERROR) {
+                printf("saved to buffer %ld\n", size);
+            }
+            break;
+        case ENTER_I_INSERT_MODE:
+            size = readConsole(ENTER_I_INSERT_MODE);
             if(size != ST_ERROR) {
                 printf("saved to buffer %ld\n", size);
             }
