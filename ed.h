@@ -54,6 +54,8 @@ char openSbuf(void);
 char closeSbuf(void);
 char initBuffer(void);
 
+line_t* dupLineNode(line_t *const lp);
+
 // ========== [command.c] ==========
 char execCommand(char *s);
 

@@ -89,3 +89,19 @@ char initBuffer(void)
     linkNodes(&buffer_head, &buffer_head);
     return 1;
 }
+
+line_t* dupLineNode(line_t *const lp)
+{
+    line_t *const p = (line_t*)malloc(sizeof(line_t));
+    if(p == 0) {
+        cprint(ERROR_CODE_MEM);
+        return 0;
+    }
+
+    if(lp) {
+        p->pos = lp->pos;
+        p->len = lp->len;
+    }
+
+    return p;
+}
