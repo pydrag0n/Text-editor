@@ -1,5 +1,14 @@
 #include "color.h"
 
+typedef struct line
+{
+    struct line *forw;
+    struct line *back;
+    long pos;
+    long len;
+}
+line_t;
+
 // ========== [print codes] ==========
 #define COMMAND_CODE         0
 #define ERROR_CODE_MEM       1
@@ -26,6 +35,22 @@
 #define COMMAND_APPEND              'a'
 #define COMMAND_INSERT              'i'
 #define COMMAND_COLOR               'C'
+
+// ========== [buffer.c] ==========
+long currentAddr(void);
+long incCurrentAddr(void);
+void setCurrentAddr(const int addr);
+
+long lastAddr(void);
+
+char modified(void);
+void setModified(const char m);
+
+long incAddr(long addr);
+long decAddr(long addr);
+
+void linkNodes(line_t *const prev, line_t *const next);
+void insertNode(line_t *const lp, line_t *const prev);
 
 // ========== [command.c] ==========
 char parse(char *s);
