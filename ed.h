@@ -52,6 +52,10 @@ long decAddr(long addr);
 void linkNodes(line_t *const prev, line_t *const next);
 void insertNode(line_t *const lp, line_t *const prev);
 
+char openSbuf(void);
+char closeSbuf(void);
+char initBuffer(void);
+
 // ========== [command.c] ==========
 char parse(char *s);
 

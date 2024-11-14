@@ -1,8 +1,14 @@
+#include <stdio.h>
+
 #include "ed.h"
 
 static long current_addr_ = 0; // current line address in buffer
 static long last_addr_ = 0;    // last(head) line address in buffer
 static char modified_ = 0;     // if buffer was modified since last read/write
+
+static char seek_write = 0;	   // seek before writing
+static FILE *sfp = 0;		   // scratch file pointer
+static long sfpos = 0;		   // scratch file position
 
 static line_t buffer_head;     // linked list of line_t
 
@@ -49,4 +55,37 @@ void insertNode(line_t *const lp, line_t *const prev)
 {
     linkNodes(lp, prev->forw);
     linkNodes(prev, lp);
+}
+
+// open scratch file
+char openSbuf(void)
+{
+    sfp = tmpfile();
+    if(!sfp) {
+        printf("Cannot open temp file\n");
+        return 0;
+    }
+    return 1;
+}
+
+// close scratch file
+char closeSbuf(void)
+{
+    if(sfp) {
+        if(fclose(sfp) != 0 ) {
+            printf("Cannot close temp file\n");
+            return 0;
+        }
+        sfp = 0;
+    }
+    sfpos = 0;
+    seek_write = 0;
+    return 1;
+}
+
+char initBuffer(void)
+{
+    if(openSbuf() == 0) {return 0;}
+    linkNodes(&buffer_head, &buffer_head);
+    return 1;
 }
