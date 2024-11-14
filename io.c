@@ -11,13 +11,13 @@ long readFile(void)
 
     if(filename == 0) {
         cprint(ERROR_CODE_FILENAME);
-        return ST_ERROR;
+        return -1;
     }
 
     FILE *fp = fopen(filename, "r");
     if (fp == 0) {
         cprint(ERROR_CODE_OPEN);
-        return ST_ERROR;
+        return -1;
     }
 
     fseek(fp, 0, SEEK_END);
@@ -29,7 +29,7 @@ long readFile(void)
     if (buffer == 0) {
         cprint(ERROR_CODE_MEM);
         fclose(fp);
-        return ST_ERROR;
+        return -1;
     }
     setBuffer(buffer);
 
@@ -46,13 +46,13 @@ long writeFile(void)
 
     if(filename == 0) {
         cprint(ERROR_CODE_FILENAME);
-        return ST_ERROR;
+        return -1;
     }
 
     FILE *fp = fopen(filename, "w");
     if(fp == 0) {
         cprint(ERROR_CODE_OPEN);
-        return ST_ERROR;
+        return -1;
     }
 
     fputs(buffer, fp);
@@ -96,7 +96,7 @@ long readConsole(char _Mode) // a or i
         if (newBuffer == 0) {
             cprint(ERROR_CODE_MEM);
             free(buffer);
-            return ST_ERROR;
+            return -1;
         }
 
         buffer = newBuffer;

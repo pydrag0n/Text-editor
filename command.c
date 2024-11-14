@@ -4,10 +4,16 @@
 
 #include "ed.h"
 
-char parse(char *s)
+char execCommand(char *s)
 {
     char *buffer = getBuffer();
     char c = s[0];
+
+    if(s[1] != '\n' && s[1] != ' ' && s[1] != '\0') {
+        printf("?\n");
+        return 0;
+    }
+
     long size;
     switch(c) {
         case COMMAND_WRITE_FILE:
@@ -17,7 +23,7 @@ char parse(char *s)
                 setFilename(&s[2]);
                 size = writeFile();
             }
-            if(size != ST_ERROR) {
+            if(size != -1) {
                 printf("write %ld\n", size);
             }
             break;
@@ -28,7 +34,7 @@ char parse(char *s)
                 setFilename(&s[2]);
                 size = readFile();
             }
-            if(size != ST_ERROR) {
+            if(size != -1) {
                 printf("read %ld\n", size);
             }
             break;
@@ -41,13 +47,13 @@ char parse(char *s)
             break;
         case COMMAND_APPEND:
             size = readConsole(COMMAND_APPEND);
-            if(size != ST_ERROR) {
+            if(size != -1) {
                 printf("saved to buffer %ld\n", size);
             }
             break;
         case COMMAND_INSERT:
             size = readConsole(COMMAND_INSERT);
-            if(size != ST_ERROR) {
+            if(size != -1) {
                 printf("saved to buffer %ld\n", size);
             }
             break;
@@ -55,9 +61,9 @@ char parse(char *s)
             switchColor();
             break;
         case COMMAND_QUIT:
-            return ST_STOP_LOOP;
+            return QUIT;
         default:
             printf("?\n");
     }
-    return ST_RUN_LOOP;
+    return 0;
 }

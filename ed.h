@@ -22,9 +22,7 @@ line_t;
 #define ERROR_MSG_OPEN         "Cannot open output file\n"
 
 // ========== [main states] ==========
-#define ST_ERROR       -1
-#define ST_RUN_LOOP     0
-#define ST_STOP_LOOP    1
+#define QUIT           -1
 
 // ========== [commands] ==========
 #define COMMAND_QUIT                'q'
@@ -57,7 +55,7 @@ char closeSbuf(void);
 char initBuffer(void);
 
 // ========== [command.c] ==========
-char parse(char *s);
+char execCommand(char *s);
 
 // ========== [io.c] ==========
 long readFile(void);
@@ -80,7 +78,7 @@ void switchColor(void);
 
 void cprint(char t);
 
-void loop(void);
+int mainLoop(void);
 
 // ========== [mem.c] ==========
 char resizeBuffer(char **const buf, long *const size, const long min_size);

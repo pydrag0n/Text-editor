@@ -57,18 +57,21 @@ void cprint(char t)
     }
 }
 
-void loop(void)
+int mainLoop(void)
 {
-    char command[80];
-    char status = ST_RUN_LOOP;
-    while(status == ST_RUN_LOOP) {
+    char *cBuf = "";
+    long len = 0;
+    char status = 0;
+    while(1) {
         cprint(COMMAND_CODE);
-        fgets(command, 80, stdin);
+        cBuf = getLine(&len);
 
-        if ((strlen(command) > 0) && (command[strlen(command) - 1] == '\n')) {
-            command[strlen (command) - 1] = '\0';
+        if ((strlen(cBuf) > 0) && (cBuf[strlen(cBuf) - 1] == '\n')) {
+            cBuf[strlen(cBuf) - 1] = '\0';
         }
 
-        status = parse(command);
+        status = execCommand(cBuf);
+        if(status == 0) {continue;}
+        if(status == QUIT) {return 0;}
     }
 }
