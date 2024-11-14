@@ -64,6 +64,7 @@ long readFile(void);
 long writeFile(void);
 long readConsole(char const _Mode);
 void printBuffer(void);
+char* getLine(long *const sizep);
 
 // ========== [main_loop.c] ==========
 void setFilename(char *const s);
@@ -80,3 +81,6 @@ void switchColor(void);
 void cprint(char t);
 
 void loop(void);
+
+// ========== [mem.c] ==========
+char resizeBuffer(char **const buf, long *const size, const long min_size);

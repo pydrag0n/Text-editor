@@ -127,3 +127,28 @@ void printBuffer(void)
         line++;
     }
 }
+
+char* getLine(long *const sizep)
+{
+    static char *buf = 0;
+    static long bufsz = 0;
+    long i = 0;
+
+    while(1) {
+        short c = getchar();
+
+        if(resizeBuffer(&buf, &bufsz, i + 2) == 0) {
+            if(sizep) {
+                *sizep = 0;
+                return 0;
+            }
+        }
+
+        buf[i++] = c;
+        if(c != '\n') {continue;}
+
+        buf[i] = 0;
+        if(sizep) {*sizep = i;}
+        return buf;
+    }
+}
