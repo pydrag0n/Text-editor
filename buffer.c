@@ -130,3 +130,42 @@ void addLineNode(line_t *const lp, const long addr)
     insertNode(lp, prev);
     ++last_addr_;
 }
+
+// write a line of text to the scratch file and add a line node to the
+// editor buffer; return a pointer to the end of the text
+char *putSbufLine(char *const buf, const long size, const long addr)
+{
+    // create empty line
+    line_t *const lp = dupLineNode(0);
+    // search for line end in buffer
+    char *const p = (char*)memchr(buf, '\n', size);
+
+    if(lp == 0) {
+        return 0;
+    }
+    if(p == 0) {
+        printf("Line too long\n");
+        return 0;
+    }
+    long len = p - buf;
+    // move file pointer to end if it was changed
+    if(seek_write) {
+        if(fseek(sfp, 0, SEEK_END) != 0) {
+            printf("Cannot seek temp file\n");
+            return 0;
+        }
+        sfpos = ftell(sfp);
+        seek_write = 0;
+    }
+    if((long)fwrite(buf, 1, len, sfp) != len) {
+        sfpos = -1;
+        printf("Cannot write temp file\n");
+        return 0;
+    }
+    lp->pos = sfpos;
+    lp->len = len;
+    addLineNode(lp, addr);
+    ++current_addr_;
+    sfpos += len;
+    return p + 1;
+}

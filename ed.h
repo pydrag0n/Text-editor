@@ -58,6 +58,8 @@ line_t *dupLineNode(line_t *const lp);
 line_t *searchLineNode(const long addr);
 void addLineNode(line_t *const lp, const long addr);
 
+char *putSbufLine(char *const buf, const long size, const long addr);
+
 // ========== [command.c] ==========
 char execCommand(char *s);
 
