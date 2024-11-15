@@ -61,7 +61,10 @@ char execCommand(char *s)
             switchColor();
             break;
         case 'A':
-            appendLines(&s, currentAddr());
+            appendLines(&s, s[2] == 0 ? currentAddr() : atoi(&s[2]));
+            break;
+        case 'P':
+            displayLines(1, lastAddr());
             break;
         case COMMAND_QUIT:
             return QUIT;

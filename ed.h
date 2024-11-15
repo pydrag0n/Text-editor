@@ -61,6 +61,8 @@ void addLineNode(line_t *const lp, const long addr);
 char *putSbufLine(char *const buf, const long size, const long addr);
 char appendLines(char **bufp, const long addr);
 
+char displayLines(const long from, const long to);
+
 // ========== [command.c] ==========
 char execCommand(char *s);
 

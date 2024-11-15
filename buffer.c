@@ -194,3 +194,35 @@ char appendLines(char **bufp, const long addr)
         modified_ = 1;
     }
 }
+
+// print a range of lines to stdout
+char displayLines(const long from, const long to)
+{
+    line_t *ep = searchLineNode(to+1);
+    line_t *bp = searchLineNode(from);
+    static char *buf = 0;
+    static long bufsz = 0;
+    long line = from;
+    seek_write = 1;
+
+    while(bp != ep) {
+        long len = bp->len;
+        if(fseek(sfp, bp->pos, SEEK_SET) != 0) {
+            printf("Cannot seek temp file\n");
+            return 0;
+        }
+        if(resizeBuffer(&buf, &bufsz, len + 1) == 0) {
+            return 0;
+        }
+        if(fread(buf, 1, len, sfp) != len) {
+            printf("Cannot read temp file\n");
+            return 0;
+        }
+        buf[len] = '\0';
+        printf("%ld ", line);
+        printf("%s\n", buf);
+        bp = bp->forw;
+        line++;
+    }
+    return 1;
+}
