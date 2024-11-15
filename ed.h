@@ -37,7 +37,7 @@ line_t;
 // ========== [buffer.c] ==========
 long currentAddr(void);
 long incCurrentAddr(void);
-void setCurrentAddr(const int addr);
+void setCurrentAddr(const long addr);
 
 long lastAddr(void);
 
@@ -54,7 +54,9 @@ char openSbuf(void);
 char closeSbuf(void);
 char initBuffer(void);
 
-line_t* dupLineNode(line_t *const lp);
+line_t *dupLineNode(line_t *const lp);
+line_t *searchLineNode(const long addr);
+void addLineNode(line_t *const lp, const long addr);
 
 // ========== [command.c] ==========
 char execCommand(char *s);

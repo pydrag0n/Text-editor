@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "ed.h"
 
@@ -20,7 +22,7 @@ long incCurrentAddr(void)
     }
     return current_addr_;
 }
-void setCurrentAddr(const int addr) { current_addr_ = addr; }
+void setCurrentAddr(const long addr) { current_addr_ = addr; }
 
 long lastAddr(void) { return last_addr_; }
 
@@ -83,6 +85,7 @@ char closeSbuf(void)
     return 1;
 }
 
+// init linked list and scratch file
 char initBuffer(void)
 {
     if(openSbuf() == 0) {return 0;}
@@ -90,7 +93,8 @@ char initBuffer(void)
     return 1;
 }
 
-line_t* dupLineNode(line_t *const lp)
+// return a pointer to a copy of a line node, or to a new node if lp == 0
+line_t *dupLineNode(line_t *const lp)
 {
     line_t *const p = (line_t*)malloc(sizeof(line_t));
     if(p == 0) {
@@ -104,4 +108,25 @@ line_t* dupLineNode(line_t *const lp)
     }
 
     return p;
+}
+
+// return pointer to a line node in the editor buffer
+line_t *searchLineNode(const long addr)
+{
+    line_t * lp = &buffer_head;
+    long o_addr = 0;
+
+    while(o_addr < addr) {
+        ++o_addr;
+        lp = lp->forw;
+    }
+    return lp;
+}
+
+// add a line node in the editor buffer after the given line
+void addLineNode(line_t *const lp, const long addr)
+{
+    line_t *const prev = searchLineNode(addr);
+    insertNode(lp, prev);
+    ++last_addr_;
 }
