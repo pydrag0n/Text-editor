@@ -60,6 +60,9 @@ char execCommand(char *s)
         case COMMAND_COLOR:
             switchColor();
             break;
+        case 'A':
+            appendLines(&s, currentAddr());
+            break;
         case COMMAND_QUIT:
             return QUIT;
         default:

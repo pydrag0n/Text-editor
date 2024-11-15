@@ -113,7 +113,7 @@ line_t *dupLineNode(line_t *const lp)
 // return pointer to a line node in the editor buffer
 line_t *searchLineNode(const long addr)
 {
-    line_t * lp = &buffer_head;
+    line_t *lp = &buffer_head;
     long o_addr = 0;
 
     while(o_addr < addr) {
@@ -168,4 +168,29 @@ char *putSbufLine(char *const buf, const long size, const long addr)
     ++current_addr_;
     sfpos += len;
     return p + 1;
+}
+
+// Insert text from stdin to after line n;
+// stop when a single period is read.
+// Return false if insertion fails
+char appendLines(char **bufp, const long addr)
+{
+    long size = 0;
+    current_addr_ = addr;
+
+    while(1) {
+        *bufp = getLine(&size);
+        if(*bufp == 0) {
+            return 0;
+        }
+        if(size == 2 && **bufp == '.') {
+            *bufp += size;
+            return 1;
+        }
+        if(putSbufLine(*bufp, size, current_addr_) == 0) {
+            return 0;
+        }
+        *bufp += size;
+        modified_ = 1;
+    }
 }
