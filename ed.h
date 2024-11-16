@@ -77,6 +77,7 @@ char displayLines(long from, const long to);
 char *getLine(long *const sizep);
 
 long read_file(char *const filename, const long addr);
+long write_file(const char *const filename, const long from);
 
 // ========== [main_loop.c] ==========
 void setFilename(char *const s);

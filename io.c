@@ -251,3 +251,51 @@ long read_file(char *const filename, const long addr)
     printf("%ld\n", size);
     return currentAddr() - addr;
 }
+
+// write a range of lines to a stream
+long write_stream(FILE *const fp, long from)
+{
+    long to = lastAddr();
+    line_t *lp = searchLineNode(from);
+    long size = 0;
+
+    while(from <= to) {
+        char *p = getSbufLine(lp);
+        if(p == 0) {
+            return -1;
+        }
+        long len = lp->len;
+        p[len++] = '\n';
+        size += len;
+        while(--len >= 0) {
+            if(fputc(*p++, fp) == EOF) {
+                printf("Cannot write file\n");
+                return -1;
+            }
+        }
+        ++from;
+        lp = lp->forw;
+    }
+    return size;
+}
+
+
+// write a range of lines to a named file/pipe; return line count
+long write_file(const char *const filename, const long from)
+{
+    FILE *fp = fopen(filename, "w");
+    if(fp == 0) {
+        printf("Cannot open output file\n");
+        return -1;
+    }
+    long size = write_stream(fp, from);
+    if(size < 0) {
+        return -1;
+    }
+    if(fclose(fp) != 0) {
+        printf("Cannot close output file\n");
+        return -1;
+    }
+    printf("%ld\n", size);
+    return lastAddr() - from + 1;
+}

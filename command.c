@@ -73,6 +73,13 @@ char execCommand(char *s)
             read_file(getFilename(), 0);
             setModified(0);
             break;
+        case 'W':
+            if(s[2] != 0) {
+                setFilename(&s[2]);
+            }
+            write_file(getFilename(), 1);
+            setModified(0);
+            break;
         case COMMAND_QUIT:
             return QUIT;
         default:
