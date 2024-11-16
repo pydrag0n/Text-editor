@@ -59,9 +59,9 @@ line_t *searchLineNode(const long addr);
 void addLineNode(line_t *const lp, const long addr);
 
 char *putSbufLine(char *const buf, const long size, const long addr);
-char appendLines(char **bufp, const long addr);
+char *getSbufLine(const line_t *const lp);
 
-char displayLines(const long from, const long to);
+char appendLines(char **bufp, const long addr);
 
 // ========== [command.c] ==========
 char execCommand(char *s);
@@ -71,7 +71,10 @@ long readFile(void);
 long writeFile(void);
 long readConsole(char const _Mode);
 void printBuffer(void);
-char* getLine(long *const sizep);
+
+char displayLines(long from, const long to);
+
+char *getLine(long *const sizep);
 
 long read_file(char *const filename, const long addr);
 

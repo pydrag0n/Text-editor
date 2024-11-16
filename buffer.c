@@ -195,34 +195,32 @@ char appendLines(char **bufp, const long addr)
     }
 }
 
-// print a range of lines to stdout
-char displayLines(const long from, const long to)
+// get a line of text from the scratch file; return pointer to the text
+char *getSbufLine(const line_t *const lp)
 {
-    line_t *ep = searchLineNode(to+1);
-    line_t *bp = searchLineNode(from);
     static char *buf = 0;
     static long bufsz = 0;
-    long line = from;
-    seek_write = 1;
 
-    while(bp != ep) {
-        long len = bp->len;
-        if(fseek(sfp, bp->pos, SEEK_SET) != 0) {
+    if(lp == &buffer_head) {
+        return 0;
+    }
+    seek_write = 1;
+    if(sfpos != lp->pos) {
+        sfpos = lp->pos;
+        if(fseek(sfp, sfpos, SEEK_SET) != 0) {
             printf("Cannot seek temp file\n");
             return 0;
         }
-        if(resizeBuffer(&buf, &bufsz, len + 1) == 0) {
-            return 0;
-        }
-        if(fread(buf, 1, len, sfp) != len) {
-            printf("Cannot read temp file\n");
-            return 0;
-        }
-        buf[len] = '\0';
-        printf("%ld ", line);
-        printf("%s\n", buf);
-        bp = bp->forw;
-        line++;
     }
-    return 1;
+    long len = lp->len;
+    if(resizeBuffer(&buf, &bufsz, len + 1) == 0) {
+        return 0;
+    }
+    if((long)fread( buf, 1, len, sfp ) != len) {
+        printf("Cannot read temp file\n");
+        return 0;
+    }
+    sfpos += len;
+    buf[len] = 0;
+    return buf;
 }

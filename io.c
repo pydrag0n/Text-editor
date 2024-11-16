@@ -128,6 +128,27 @@ void printBuffer(void)
     }
 }
 
+// print a range of lines to stdout
+char displayLines(long from, const long to)
+{
+    line_t *ep = searchLineNode(to+1);
+    line_t *bp = searchLineNode(from);
+    long line = from;
+
+    while(bp != ep) {
+        const char *const s = getSbufLine(bp);
+        if(!s) {
+            return 0;
+        }
+        setCurrentAddr(from++);
+        printf("%ld ", line);
+        printf("%s\n",s);
+        bp = bp->forw;
+        line++;
+    }
+    return 1;
+}
+
 char* getLine(long *const sizep)
 {
     static char *buf = 0;
