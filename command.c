@@ -28,6 +28,9 @@ char execCommand(char *s)
             return 0;
         }
     case 'E':
+        deleteLines(1, lastAddr());
+        closeSbuf();
+        openSbuf();
         if(s[2] != 0) {
             setFilename(&s[2]);
         }
