@@ -224,3 +224,15 @@ char *getSbufLine(const line_t *const lp)
     buf[len] = 0;
     return buf;
 }
+
+// delete a range of lines
+char deleteLines(const long from, const long to)
+{
+    line_t *p = searchLineNode(from-1);
+    line_t *n = searchLineNode(to+1);
+    linkNodes(p, n);
+    last_addr_ -= to - from + 1;
+    current_addr_ = from - 1;
+    modified_ = 1;
+    return 1;
+}

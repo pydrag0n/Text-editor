@@ -35,6 +35,7 @@ char *putSbufLine(char *const buf, const long size, const long addr);
 char *getSbufLine(const line_t *const lp);
 
 char appendLines(char **bufp, const long addr);
+char deleteLines(const long from, const long to);
 
 // ========== [command.c] ==========
 char execCommand(char *s);

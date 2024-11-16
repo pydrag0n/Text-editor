@@ -15,6 +15,13 @@ char execCommand(char *s)
     case 'a':
         appendLines(&s, s[2] == 0 ? currentAddr() : atoi(&s[2]));
         break;
+    case 'd':
+        if(s[2] != 0) {
+            deleteLines(atoi(&s[2]), atoi(&s[2]));
+        } else {
+            deleteLines(currentAddr(), currentAddr());
+        }
+        break;
     case 'e':
         if(modified() == 0){
             if(s[2] != 0) {
