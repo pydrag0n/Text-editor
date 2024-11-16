@@ -1,8 +1,10 @@
+# text-editor
+
 call - ed file
 if file specified, load it into buffer, update default filename
 start in command mode
 
-commands
+### commands
 
 i - insert data into buffer, if there are data already, it will be rewritten
 a - append data to the end of buffer
@@ -12,3 +14,9 @@ e file - read file to buffer, update default filename, if no file specified, def
 p - print buffer to console
 C - switch color mode
 q - quit
+
+### install
+
+git clone https://github.com/pydrag0n/Text-editor
+cd Text-editor
+make
