@@ -1,5 +1,3 @@
-#include "color.h"
-
 typedef struct line
 {
     struct line *forw;
@@ -8,18 +6,6 @@ typedef struct line
     long len;
 }
 line_t;
-
-// ========== [print codes] ==========
-#define COMMAND_CODE         0
-#define ERROR_CODE_MEM       1
-#define ERROR_CODE_FILENAME  2
-#define ERROR_CODE_OPEN      3
-
-// ========== [print messages] ==========
-#define COMMAND_CHAR           "*"
-#define ERROR_MSG_MEM          "Memory allocation error\n"
-#define ERROR_MSG_FILENAME     "No current filename\n"
-#define ERROR_MSG_OPEN         "Cannot open output file\n"
 
 // ========== [buffer.c] ==========
 long currentAddr(void);
@@ -64,10 +50,6 @@ long write_file(const char *const filename, const long from);
 // ========== [main_loop.c] ==========
 void setFilename(char *const s);
 char* getFilename(void);
-
-void switchColor(void);
-
-void cprint(char t);
 
 int mainLoop(void);
 

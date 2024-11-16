@@ -13,9 +13,6 @@ char execCommand(char *s)
 
     char c = s[0];
     switch(c) {
-        case 'C':
-            switchColor();
-            break;
         case 'a':
             appendLines(&s, s[2] == 0 ? currentAddr() : atoi(&s[2]));
             break;

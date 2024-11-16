@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "ed.h"
@@ -16,7 +17,7 @@ char resizeBuffer(char **const buf, long *const size, const long minSize)
         }
 
         if(newBuf == 0) {
-            cprint(ERROR_CODE_MEM);
+            printf("Memory allocation error\n");
             return 0;
         }
 

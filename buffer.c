@@ -98,7 +98,7 @@ line_t *dupLineNode(line_t *const lp)
 {
     line_t *const p = (line_t*)malloc(sizeof(line_t));
     if(p == 0) {
-        cprint(ERROR_CODE_MEM);
+        printf("Memory allocation error\n");
         return 0;
     }
 
