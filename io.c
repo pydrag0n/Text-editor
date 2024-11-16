@@ -103,6 +103,9 @@ long read_stream(FILE *const fp, const long addr)
         if(putSbufLine(s, size, currentAddr()) == 0) {
             return -1;
         }
+        #ifdef _WIN32
+        ++total_size; // newline in windows is two bytes
+        #endif
         lp = lp->forw;
     }
     return total_size;
@@ -150,6 +153,9 @@ long write_stream(FILE *const fp, long from)
             }
         }
         ++from;
+        #ifdef _WIN32
+        ++size; // newline in windows is two bytes
+        #endif
         lp = lp->forw;
     }
     return size;
