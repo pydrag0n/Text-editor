@@ -73,6 +73,8 @@ long readConsole(char const _Mode);
 void printBuffer(void);
 char* getLine(long *const sizep);
 
+long read_file(char *const filename, const long addr);
+
 // ========== [main_loop.c] ==========
 void setFilename(char *const s);
 char* getFilename(void);

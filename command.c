@@ -66,6 +66,13 @@ char execCommand(char *s)
         case 'P':
             displayLines(1, lastAddr());
             break;
+        case 'E':
+            if(s[2] != 0) {
+                setFilename(&s[2]);
+            }
+            read_file(getFilename(), 0);
+            setModified(0);
+            break;
         case COMMAND_QUIT:
             return QUIT;
         default:

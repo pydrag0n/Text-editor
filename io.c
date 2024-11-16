@@ -152,3 +152,81 @@ char* getLine(long *const sizep)
         return buf;
     }
 }
+
+// Read a line of text from a stream.
+// Return pointer to buffer and line size
+char *read_stream_line(FILE *const fp, long *const sizep)
+{
+    static char *buf = 0;
+    static long bufsz = 0;
+    short c = 0;
+    long i = 0;
+
+    while(1) {
+        if(resizeBuffer(&buf, &bufsz, i + 2) == 0) {
+            return 0;
+        }
+        c = getc(fp);
+        if(c == EOF) {
+            break;
+        }
+        buf[i++] = c;
+        if(c == '\n') {
+            break;
+        }
+    }
+    buf[i] = 0;
+    if(c == EOF && i != 0) {
+        buf[i] = '\n';
+        buf[i+1] = 0;
+        i++;
+    }
+    *sizep = i;
+    return buf;
+}
+
+// read a stream into the editor buffer; return total size of data read
+long read_stream(FILE *const fp, const long addr)
+{
+    line_t *lp = searchLineNode(addr);
+    long total_size = 0;
+
+    setCurrentAddr(addr);
+    while(1) {
+        long size = 0;
+        char *const s = read_stream_line(fp, &size);
+        if(s == 0) {
+            return -1;
+        }
+        if(size > 0) {
+            total_size += size;
+        } else {
+            break;
+        }
+        if(putSbufLine(s, size, currentAddr()) == 0) {
+            return -1;
+        }
+        lp = lp->forw;
+    }
+    return total_size;
+}
+
+// read a named file/pipe into the buffer; return line count
+long read_file(char *const filename, const long addr)
+{
+    FILE *fp = fopen(filename, "r");
+    if(fp == 0) {
+        printf("Cannot open input file\n");
+        return -1;
+    }
+    long size = read_stream(fp, addr);
+    if(size < 0) {
+        return -1;
+    }
+    if(fclose(fp) != 0) {
+        printf("Cannot close input file\n");
+        return -1;
+    }
+    printf("%ld\n", size);
+    return currentAddr() - addr;
+}
