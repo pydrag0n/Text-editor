@@ -21,19 +21,6 @@ line_t;
 #define ERROR_MSG_FILENAME     "No current filename\n"
 #define ERROR_MSG_OPEN         "Cannot open output file\n"
 
-// ========== [main states] ==========
-#define QUIT           -1
-
-// ========== [commands] ==========
-#define COMMAND_QUIT                'q'
-#define COMMAND_QUIT_INSERT         '.'
-#define COMMAND_WRITE_FILE          'w'
-#define COMMAND_READ_FILE           'e'
-#define COMMAND_PRINT_BUFFER        'p'
-#define COMMAND_APPEND              'a'
-#define COMMAND_INSERT              'i'
-#define COMMAND_COLOR               'C'
-
 // ========== [buffer.c] ==========
 long currentAddr(void);
 long incCurrentAddr(void);
@@ -67,11 +54,6 @@ char appendLines(char **bufp, const long addr);
 char execCommand(char *s);
 
 // ========== [io.c] ==========
-long readFile(void);
-long writeFile(void);
-long readConsole(char const _Mode);
-void printBuffer(void);
-
 char displayLines(long from, const long to);
 
 char *getLine(long *const sizep);
@@ -82,12 +64,6 @@ long write_file(const char *const filename, const long from);
 // ========== [main_loop.c] ==========
 void setFilename(char *const s);
 char* getFilename(void);
-
-void setBuffer(char *const s);
-char* getBuffer(void);
-
-void setBufferTop(char *const s);
-char* getBufferTop(void);
 
 void switchColor(void);
 

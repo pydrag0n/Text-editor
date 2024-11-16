@@ -10,15 +10,12 @@ int main(int argc, char **argv)
         printf("usage: %s [file]", argv[0]);
         return 1;
     }
-    if(argc == 2) {
-        setFilename(argv[1]);
-        long size = readFile();
-        if(size != -1) {
-            printf("read %ld\n", size);
-        }
-    }
     if(initBuffer() == 0) {
         return 1;
+    }
+    if(argc == 2) {
+        setFilename(argv[1]);
+        read_file(getFilename(), 0);
     }
     return mainLoop();
 }

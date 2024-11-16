@@ -4,8 +4,6 @@
 #include "ed.h"
 
 static char filename[255] = "";
-static char *buffer = 0;
-static char *bufferTop = 0;
 static char color = 0;
 
 void setFilename(char *const s)
@@ -14,12 +12,6 @@ void setFilename(char *const s)
     filename[sizeof(filename) - 1] = 0;
 }
 char* getFilename(void) { return filename; }
-
-void setBuffer(char *const s) { buffer = s; }
-char* getBuffer(void) { return buffer; }
-
-void setBufferTop(char *const s) { bufferTop = s; }
-char* getBufferTop(void) { return bufferTop; }
 
 void switchColor(void) { color = !color; }
 
@@ -72,6 +64,6 @@ int mainLoop(void)
 
         status = execCommand(cBuf);
         if(status == 0) {continue;}
-        if(status == QUIT) {return 0;}
+        if(status == -1) {return 0;}
     }
 }
