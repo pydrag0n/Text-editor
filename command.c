@@ -23,15 +23,10 @@ char execCommand(char *s)
         }
         break;
     case 'e':
-        if(modified() == 0){
-            if(s[2] != 0) {
-                setFilename(&s[2]);
-            }
-            read_file(getFilename(), 0);
-        } else {
+        if(modified()) {
             printf("warning: buffer modified. To force read use E\n");
+            return 0;
         }
-        break;
     case 'E':
         if(s[2] != 0) {
             setFilename(&s[2]);
@@ -43,12 +38,10 @@ char execCommand(char *s)
         displayLines(1, lastAddr());
         break;
     case 'q':
-        if(modified() == 0) {
-            return -1;
-        } else {
+        if(modified()) {
             printf("warning: buffer modified. To force exit use Q\n");
+            return 0;
         }
-        break;
     case 'Q':
         return -1;
         break;
