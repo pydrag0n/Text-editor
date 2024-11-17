@@ -16,7 +16,7 @@ int mainLoop(void)
 {
     char *cBuf = "";
     long len = 0;
-    char status = 0;
+    short status = 0;
     while(1) {
         printf("*");
         cBuf = getLine(&len);

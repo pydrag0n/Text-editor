@@ -3,7 +3,7 @@
 
 #include "ed.h"
 
-char execCommand(char *s)
+short execCommand(char *s)
 {
     if(s[1] != ' ' && s[1] != '\0') {
         printf("?\n");

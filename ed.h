@@ -38,7 +38,7 @@ char appendLines(char **bufp, const long addr);
 char deleteLines(const long from, const long to);
 
 // ========== [command.c] ==========
-char execCommand(char *s);
+short execCommand(char *s);
 
 // ========== [io.c] ==========
 char displayLines(long from, const long to);
